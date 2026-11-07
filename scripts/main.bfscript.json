@@ -1,0 +1,39 @@
+{
+  "format": 1,
+  "functions": {
+    "heat": {
+      "signature": "column.values@1",
+      "body": [
+        {"let": "top", "type": "integer", "value": 1},
+        {"forEach": "probe", "in": {"get": ["input", "items"]}, "max": 128, "body": [
+          {"checkCancelled": true},
+          {"let": "width", "value": {"length": {"coalesce": [{"get": ["probe", "size"]}, "0"]}}},
+          {"if": {"gt": [{"get": ["width"]}, {"get": ["top"]}]}, "then": [
+            {"set": "top", "value": {"get": ["width"]}}
+          ]}
+        ]},
+        {"let": "out", "type": {"list": "ColumnValue"}, "value": {"list": []}},
+        {"forEach": "item", "in": {"get": ["input", "items"]}, "max": 128, "body": [
+          {"checkCancelled": true},
+          {"let": "raw", "value": {"coalesce": [{"get": ["item", "size"]}, "0"]}},
+          {"let": "digits", "value": {"length": {"get": ["raw"]}}},
+          {"let": "gap", "value": {"sub": [{"get": ["top"]}, {"get": ["digits"]}]}},
+          {"let": "cells", "value": {"cond": [{"gt": [{"get": ["gap"]}, 5]}, 0, {"sub": [5, {"get": ["gap"]}]}]}},
+          {"let": "lit", "value": {"cond": [{"eq": [{"get": ["raw"]}, "0"]}, 0, {"get": ["cells"]}]}},
+          {"append": "out", "value": {"record": {
+            "handle": {"get": ["item", "handle"]},
+            "text": {"concat": [
+              {"substring": ["█████", 0, {"get": ["lit"]}]},
+              {"substring": ["░░░░░", 0, {"sub": [5, {"get": ["lit"]}]}]}
+            ]},
+            "sortKey": {"concat": [
+              {"substring": ["00000000000000000000", 0, {"sub": [20, {"get": ["digits"]}]}]},
+              {"get": ["raw"]}
+            ]}
+          }}}
+        ]},
+        {"return": {"get": ["out"]}}
+      ]
+    }
+  }
+}
