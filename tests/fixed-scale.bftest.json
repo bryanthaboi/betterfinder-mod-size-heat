@@ -1,0 +1,26 @@
+{
+  "name": "fixed-scale",
+  "hook": "column.values",
+  "input": {
+    "column": "heat",
+    "revision": 1,
+    "items": [
+      {"handle": "huge", "name": "Models", "kind": "folder", "size": "448", "totalSize": "42949672960"},
+      {"handle": "gig", "name": "movie.mkv", "kind": "file", "size": "1610612736"},
+      {"handle": "mid", "name": "photos.zip", "kind": "file", "size": "52428800"},
+      {"handle": "small", "name": "notes.txt", "kind": "file", "size": "2048"},
+      {"handle": "pending", "name": "Downloads", "kind": "folder", "size": "640"},
+      {"handle": "empty", "name": "empty", "kind": "file", "size": "0"}
+    ]
+  },
+  "expect": {
+    "equals": [
+      {"handle": "huge", "text": "█████", "sortKey": "00000000042949672960", "label": "huge, 40 GB"},
+      {"handle": "gig", "text": "███▌░", "sortKey": "00000000001610612736", "label": "big, 1.5 GB"},
+      {"handle": "mid", "text": "██░░░", "sortKey": "00000000000052428800", "label": "medium, 50 MB"},
+      {"handle": "small", "text": "░░░░░", "sortKey": "00000000000000002048", "label": "tiny, 2 KB"},
+      {"handle": "pending", "text": "·····", "sortKey": "00000000000000000000", "label": "Not measured yet"},
+      {"handle": "empty", "text": "░░░░░", "sortKey": "00000000000000000000", "label": "tiny, 0 bytes"}
+    ]
+  }
+}

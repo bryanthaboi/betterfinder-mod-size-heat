@@ -3,23 +3,43 @@
   "id": "bryanthaboi.size-heat",
   "name": "Size Heat",
   "author": "bryanthaboi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "api": ">=1.0.0 <2.0.0",
   "app": ">=1.0.0 <2.0.0",
-  "runtime": "jsc-ir/1",
-  "entry": "scripts/main.bfscript.json",
+  "runtime": "ts/1",
+  "entry": "scripts/main.ts",
   "license": "MIT",
   "permissions": [
-    {"kind": "ui.selection", "level": "metadata", "reason": "Read the size of each visible item to draw its heat bar"},
-    {"kind": "ui", "surfaces": ["column"]}
+    {
+      "kind": "ui.selection",
+      "level": "metadata",
+      "reason": "Read the size of each visible item, and a folder's measured total, to draw its heat bar"
+    },
+    {
+      "kind": "ui",
+      "surfaces": [
+        "column"
+      ]
+    }
   ],
   "contributes": {
     "columns": [
-      {"id": "heat", "title": "Heat", "valueType": "string", "handler": "heat", "sortable": true, "width": 90}
+      {
+        "id": "heat",
+        "title": "Heat",
+        "valueType": "string",
+        "handler": "heat",
+        "sortable": true,
+        "width": 90
+      }
     ]
   },
   "hooks": [
-    {"name": "column.values", "handler": "heat", "version": 1}
+    {
+      "name": "column.values",
+      "handler": "heat",
+      "version": 1
+    }
   ],
   "settings": [],
   "dependencies": [],
